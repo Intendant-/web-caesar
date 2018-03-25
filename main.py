@@ -16,7 +16,7 @@ form = """<!DOCTYPE html>
                 font: 16px sans-serif;
                 border-radius: 10px;
             }
-            textarea {{
+            textarea {
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
@@ -24,25 +24,27 @@ form = """<!DOCTYPE html>
         </style>
     </head>
     <body>
-        <form action="POST">
+        <form action="/" method="POST" >
             <label for="rot" >Rotate by</label>
-            <input type="rot" value=0 >
+            <input name="rot" value=0 >
             <textarea name="text" id="" cols="30" rows="10">{0}</textarea>
             <input type="submit" value="Submit" >
         </form>
     </body>
 </html>"""
 
+@app.route("/")
+def index():
+    return form
+
 @app.route("/", methods=['POST'])
-def encypt(rot, text):
-    rotate = rot
-    cypher = text
+def encrypt():
+    rotate = int(request.form['rot'])
+    cypher = request.form['text']
 
     ##return "<h1>"rotate_string(cypher, rotate)"</h1>"
     return rotate_string(cypher, rotate)
 
-@app.route("/")
-def index():
-    return form
+
 
 app.run()
